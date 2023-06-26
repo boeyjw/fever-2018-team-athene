@@ -109,12 +109,12 @@ Download the datasets already processed through document retrieval, the pre-trai
     
 ### Run the end-to-end pipeline of the submitted models
 
-    PYTHONPATH=src python src/script/athene/pipeline.py
+    PYTHONPATH=src python src/scripts/athene/pipeline.py
     
 ### Run the pipeline in different modes:
 Launch the pipeline with optional mode arguments:
 
-    PYTHONPATH=src python src/script/athene/pipeline.py [--mode <mode>]
+    PYTHONPATH=src python src/scripts/athene/pipeline.py [--mode <mode>]
 
 All possible modes are as followings:
 

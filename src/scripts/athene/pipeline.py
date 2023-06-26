@@ -85,8 +85,10 @@ def _construct_args_for_sentence_retrieval(phase='training'):
     setattr(_args, 'train_data', Config.training_doc_file)
     setattr(_args, 'dev_data', Config.dev_doc_file)
     setattr(_args, 'test_data', Config.test_doc_file)
+    setattr(_args, 'db_path', Config.db_path)
     setattr(_args, 'fasttext_path', Config.fasttext_path)
     setattr(_args, 'phase', phase)
+    setattr(_args, 'embedding_path', Config.sentence_retrieval_embedding_folder)
     if phase == 'training':
         out_file = Config.training_set_file
     elif phase == 'deving':
@@ -115,8 +117,8 @@ def sentence_retrieval_ensemble(logger, mode: Mode = Mode.PIPELINE):
         logger.info("Starting training sentence retrieval...")
         _args.phase = 'training'
         _args.test_data = Config.dev_doc_file  # predict dev set in training phase
-        os.remove(os.path.join(os.getcwd(), "test_data.p"))
-        os.remove(os.path.join(os.getcwd(), "test_indexes.p"))
+        os.remove(os.path.join(Config.sentence_retrieval_embedding_folder, "test_data.p"))
+        os.remove(os.path.join(Config.sentence_retrieval_embedding_folder, "test_indexes.p"))
         sentence_retrieval_ensemble_entrance(_args)
         logger.info("Finished training sentence retrieval.")
     if mode in {Mode.PIPELINE, Mode.PIPELINE_NO_DOC_RETR, Mode.PREDICT_ALL_DATASETS,
@@ -125,21 +127,21 @@ def sentence_retrieval_ensemble(logger, mode: Mode = Mode.PIPELINE):
         _args.phase = 'testing'
         _args.out_file = Config.dev_set_file
         _args.test_data = Config.dev_doc_file
-        os.remove(os.path.join(os.getcwd(), "test_data.p"))
-        os.remove(os.path.join(os.getcwd(), "test_indexes.p"))
+        os.remove(os.path.join(Config.sentence_retrieval_embedding_folder, "test_data.p"))
+        os.remove(os.path.join(Config.sentence_retrieval_embedding_folder, "test_indexes.p"))
         sentence_retrieval_ensemble_entrance(_args)
         logger.info("Finished selecting sentences for dev set.")
         logger.info("Starting selecting sentences for training set...")
-        os.remove(os.path.join(os.getcwd(), "test_data.p"))
-        os.remove(os.path.join(os.getcwd(), "test_indexes.p"))
+        os.remove(os.path.join(Config.sentence_retrieval_embedding_folder, "test_data.p"))
+        os.remove(os.path.join(Config.sentence_retrieval_embedding_folder, "test_indexes.p"))
         _args.test_data = Config.training_doc_file
         _args.phase = 'testing'
         _args.out_file = Config.training_set_file
         sentence_retrieval_ensemble_entrance(_args)
         logger.info("Finished selecting sentences for training set.")
     logger.info("Starting selecting sentences for test set...")
-    os.remove(os.path.join(os.getcwd(), "test_data.p"))
-    os.remove(os.path.join(os.getcwd(), "test_indexes.p"))
+    os.remove(os.path.join(Config.sentence_retrieval_embedding_folder, "test_data.p"))
+    os.remove(os.path.join(Config.sentence_retrieval_embedding_folder, "test_indexes.p"))
     _args.test_data = Config.test_doc_file
     _args.phase = 'testing'
     _args.out_file = Config.test_set_file

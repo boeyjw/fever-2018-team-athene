@@ -55,7 +55,7 @@ class Config:
     document_add_claim = True
     # sentence_retrieval_model_name = "esim"
     # sentence_retrieval_model_folder = path.join(model_folder, "sentence_retrieval")
-    # sentence_retrieval_embedding_folder = path.join(dataset_folder, "sentence_retrieval_embedding")
+    sentence_retrieval_embedding_folder = path.join(dataset_folder, "sentence_retrieval_embedding")
     submission_folder = path.join(BASE_DIR, "data/submission")
     submission_file = path.join(submission_folder, SUBMISSION_FILE_NAME)
     estimator_name = "esim"
@@ -115,5 +115,5 @@ class Config:
     os.makedirs(ckpt_folder, exist_ok=True)
     os.makedirs(submission_folder, exist_ok=True)
     # os.makedirs(sentence_retrieval_model_folder, exist_ok=True)
-    # os.makedirs(sentence_retrieval_embedding_folder, exist_ok=True)
+    os.makedirs(sentence_retrieval_embedding_folder, exist_ok=True)
     os.makedirs(sentence_retrieval_ensemble_param['model_path'], exist_ok=True)

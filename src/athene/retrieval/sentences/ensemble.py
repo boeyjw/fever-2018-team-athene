@@ -35,6 +35,8 @@ def parser_args():
     parser.add_argument('--share-parameters', type=bool, default=False)
     parser.add_argument("--phase", type=str, default="training", help="either training or testing")
     parser.add_argument("--model-path", type=str, default="model/")
+    parser.add_argument("--db-path", type=str)
+    parser.add_argument("--embedding-path", type=str, default=os.getcwd())
     args = parser.parse_args()
 
     return args
@@ -259,10 +261,10 @@ def prediction_phase(test_indexes, test_location_indexes, data_path, args, data,
 
 def entrance(args, calculate_fever_score=True):
     random.seed(args.random_seed)
-    path = os.getcwd()
+    path = args.embedding_path
     data = Data(path, args.train_data, args.dev_data, args.test_data, args.fasttext_path,
                 num_negatives=args.num_negatives, h_max_length=args.c_max_length, s_max_length=args.s_max_length,
-                random_seed=args.random_seed, reserve_embed=args.reserve_embed)
+                random_seed=args.random_seed, reserve_embed=args.reserve_embed, db_filepath=args.db_path)
     if args.phase == "training":
         training_phase(path, data, args)
 
